@@ -1,0 +1,98 @@
+
+from cryptography.fernet import Fernet
+from encryption import *
+import csv
+import pandas as pd 
+
+
+
+class PasswordManager():
+
+	def __init__(self,email,password, website):
+		self.email = email
+		self.password = password
+		self.website = website
+
+	def generate_key(self):
+		_key = Fernet.generate_key()
+		self.key = _key.decode()
+		with open('keys.txt','w') as f:
+			f.write(self.key)
+		f.close()
+
+	def Encode(self):
+		return Encrypt(self.password.encode(), self.key)
+
+	def Decode(self):
+		return Decrypt(self.password,self.key)
+
+	def save_to_file(self):
+		headers = ['email','password','hashed','website']
+		hashed = Encrypt(self.password.encode(),self.key)
+		rows = [self.email,self.password,hashed,self.website]
+		filename = '/home/mr/Desktop/python/password_manager/Passwords.csv'
+		with open(filename,'a',newline="") as f:
+			writer = csv.writer(f)
+			writer.writerow(rows)
+			f.close()
+
+
+def ShowPasswords():
+
+	filename = '/home/mr/Desktop/python/password_manager/Passwords.csv'
+	rows = []
+	with open(filename,'r',newline="") as f:
+		reader = csv.reader(f,delimiter='|')
+		header = next(reader)
+		for row in reader:
+			rows.append(row)
+	print(header)
+	print(rows)
+
+
+def pandas_view():
+	filename = '/home/mr/Desktop/python/password_manager/Passwords.csv'
+	try:
+
+		File = pd.read_csv(filename)
+		print(File[['email','password','website']])
+	except:
+		print("[!] -_- there are no passwords here babe, create a new file with the store password option.")
+
+def main():
+	while True:
+
+
+		print("""
+
+.------..------..------..------..------..------.
+|C.--. ||H.--. ||E.--. ||E.--. ||K.--. ||S.--. |
+| :/\: || :/\: || (\/) || (\/) || :/\: || :/\: |
+| :\/: || (__) || :\/: || :\/: || :\/: || :\/: |
+| '--'C|| '--'H|| '--'E|| '--'E|| '--'K|| '--'S|
+`------'`------'`------'`------'`------'`------'
+
+
+				1 - Store password
+				2 - View Password
+
+
+		""")
+
+		choice = int(input("\n>>"))
+		if choice == 1:
+			email = input("[+] Email : ")
+			password = input("[+] Password:")
+			website  = input("[+] Website:")
+			login = PasswordManager(email,password,website)
+			login.generate_key()
+			login.save_to_file()
+
+		elif choice == 2:
+			pandas_view()
+
+		else:
+			pass
+
+
+main()
