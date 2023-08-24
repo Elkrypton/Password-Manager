@@ -5,6 +5,8 @@ import csv
 import pandas as pd 
 
 
+###we may have to adjust the program dto actually retrieve the data based on the provided key
+
 
 class PasswordManager():
 
@@ -30,16 +32,17 @@ class PasswordManager():
 		headers = ['email','password','hashed','website']
 		hashed = Encrypt(self.password.encode(),self.key)
 		rows = [self.email,self.password,hashed,self.website]
-		filename = '/home/mr/Desktop/python/password_manager/Passwords.csv'
+		filename = 'localfiles/Passwords.csv'
 		with open(filename,'a',newline="") as f:
 			writer = csv.writer(f)
+			writer.writerow(headers)
 			writer.writerow(rows)
 			f.close()
 
 
 def ShowPasswords():
 
-	filename = '/home/mr/Desktop/python/password_manager/Passwords.csv'
+	filename ='localfiles/Passwords.csv'
 	rows = []
 	with open(filename,'r',newline="") as f:
 		reader = csv.reader(f,delimiter='|')
@@ -51,11 +54,11 @@ def ShowPasswords():
 
 
 def pandas_view():
-	filename = '/home/mr/Desktop/python/password_manager/Passwords.csv'
+	filename = 'localfiles/Passwords.csv'
 	try:
 
 		File = pd.read_csv(filename)
-		print(File[['email','password','website']])
+		print(File[['email','password','hashed','website']])
 	except:
 		print("[!] -_- there are no passwords here babe, create a new file with the store password option.")
 
