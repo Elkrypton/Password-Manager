@@ -5,7 +5,7 @@ from cryptography.fernet import Fernet
 class CryptTools():
 
         def __init__(self, text):
-                self.text = str(text)
+                self.text = bytes(text, encoding='utf-8')
                 self.key = self.FindKey()
 
         def FindKey(self):
@@ -14,8 +14,8 @@ class CryptTools():
                 for file_ in os.listdir():
                         if os.path.exists(_file):
                                 
-                                content = open(file_, 'r')
-                                key += content
+                                content = open(_file, 'r')
+                                key = content.read()
                         else:
                                 print("File does not exist, do you want to create it?")
                                 choice = input("Yes/No")
@@ -36,12 +36,10 @@ class CryptTools():
 
 
         def Encrypt(self):
-                return Fernet(self.key).Encrypt(self.text)
+                return Fernet(self.key).encrypt(self.text)
         
-        def Decrypt(self):
-                return Fernet(self.key).Decrypt(self.text)
+        def Decrypt(self, tokens):
+                self.tokens = tokens
+                return Fernet(self.key).decrypt(self.tokens)
 
 
-if __name__ == "__main__":
-        text = input(">> Please provide a text to encrypt:")
-        key = 

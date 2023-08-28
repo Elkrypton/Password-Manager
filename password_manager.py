@@ -1,6 +1,5 @@
 
-from cryptography.fernet import Fernet
-from encryption import *
+from utils
 import csv
 import pandas as pd 
 
@@ -15,21 +14,9 @@ class PasswordManager():
 		self.password = password
 		self.website = website
 
-	def generate_key(self):
-		_key = Fernet.generate_key()
-		self.key = _key.decode()
-		with open('keys.txt','w') as f:
-			f.write(self.key)
-		f.close()
-
-	def Encode(self):
-		return Encrypt(self.password.encode(), self.key)
-
-	def Decode(self):
-		return Decrypt(self.password,self.key)
 
 	def save_to_file(self):
-		headers = ['email','password','hashed','website']
+		headers = ['email','password',','website']
 		hashed = Encrypt(self.password.encode(),self.key)
 		rows = [self.email,self.password,hashed,self.website]
 		filename = 'localfiles/Passwords.csv'
