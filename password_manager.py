@@ -2,7 +2,7 @@
 from utils
 import csv
 import pandas as pd 
-
+from database import *
 
 ###we may have to adjust the program dto actually retrieve the data based on the provided key
 
@@ -15,16 +15,20 @@ class PasswordManager():
 		self.website = website
 
 
-	def save_to_file(self):
-		headers = ['email','password',','website']
-		hashed = Encrypt(self.password.encode(),self.key)
-		rows = [self.email,self.password,hashed,self.website]
-		filename = 'localfiles/Passwords.csv'
-		with open(filename,'a',newline="") as f:
-			writer = csv.writer(f)
-			writer.writerow(headers)
-			writer.writerow(rows)
-			f.close()
+
+	def SavePassword(self):
+		
+
+	# def save_to_file(self):
+	# 	headers = ['email','password',','website']
+	# 	hashed = Encrypt(self.password.encode(),self.key)
+	# 	rows = [self.email,self.password,hashed,self.website]
+	# 	filename = 'localfiles/Passwords.csv'
+	# 	with open(filename,'a',newline="") as f:
+	# 		writer = csv.writer(f)
+	# 		writer.writerow(headers)
+	# 		writer.writerow(rows)
+	# 		f.close()
 
 
 def ShowPasswords():

@@ -38,8 +38,22 @@ class CryptTools():
         def Encrypt(self):
                 return Fernet(self.key).encrypt(self.text)
         
-        def Decrypt(self, tokens):
-                self.tokens = tokens
-                return Fernet(self.key).decrypt(self.tokens)
+        def Decrypt(self):
+            
+                return Fernet(self.key).decrypt(self.text)
 
+if __name__ == "__main__":
+    print("""1 - Encryption
+            2 - Decryption"""
+            )
+    
+    answer = int(input(">>:"))
+    if answer == 1:
+        text = input("[+] Content:")
+        encrypt = CryptTools(text)
+        print(encrypt.Encrypt())
+    elif answer == 2:
+        token = input(">> Provide token:")
+        decrypt = CryptTools(token)
+        print(decrypt.Decrypt())
 
