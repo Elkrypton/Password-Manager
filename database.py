@@ -19,22 +19,30 @@ class LoginInfo(Base):
     email = Column(String)
     hashed = Column(String)
 
-def CreateEngine():
-    engine = db.create_engine(db_url, echo=True)
-    return engine
+class ProcessInformation():
 
-
-def add_data(website, email, hashed):
-    engine = CreateEngine()
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    try:
-        info_data = LoginInfo(website, email, hashed)
-        session.add(info_data)
-        session.commit()
+    def __init__(self, website, email, hashed):
+        self.website = website
+        self.email = email
+        self.hashed = hashed
     
-    except Exception as err:
-        print("[!] Error Happened = {}".format(str(err)))
+
+
+    def CreateEngine(self):
+        engine = db.create_engine(db_url, echo=True)
+        return engine
+
+    def add_data(website, email, hashed):
+        engine = self.CreateEngine()
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        try:
+            info_data = LoginInfo(website, email, hashed)
+            session.add(info_data)
+            session.commit()
+    
+        except Exception as err:
+            print("[!] Error Happened = {}".format(str(err)))
 
 
 

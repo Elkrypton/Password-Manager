@@ -2,7 +2,7 @@
 from utils
 import csv
 import pandas as pd 
-from database import *
+from database import ProcessInformation
 
 ###we may have to adjust the program dto actually retrieve the data based on the provided key
 
@@ -15,9 +15,15 @@ class PasswordManager():
 		self.website = website
 
 
-
+	#save data to a local db file
 	def SavePassword(self):
+		login_info = ProcessInformation()
+		try:
+			login_info.add_data()
 		
+		except Exception as err:
+			print("[!] Error encountered ! : {}".format(str(err)))
+	
 
 	# def save_to_file(self):
 	# 	headers = ['email','password',','website']
@@ -31,27 +37,27 @@ class PasswordManager():
 	# 		f.close()
 
 
-def ShowPasswords():
+# def ShowPasswords():
 
-	filename ='localfiles/Passwords.csv'
-	rows = []
-	with open(filename,'r',newline="") as f:
-		reader = csv.reader(f,delimiter='|')
-		header = next(reader)
-		for row in reader:
-			rows.append(row)
-	print(header)
-	print(rows)
+# 	filename ='localfiles/Passwords.csv'
+# 	rows = []
+# 	with open(filename,'r',newline="") as f:
+# 		reader = csv.reader(f,delimiter='|')
+# 		header = next(reader)
+# 		for row in reader:
+# 			rows.append(row)
+# 	print(header)
+# 	print(rows)
 
 
-def pandas_view():
-	filename = 'localfiles/Passwords.csv'
-	try:
+# def pandas_view():
+# 	filename = 'localfiles/Passwords.csv'
+# 	try:
 
-		File = pd.read_csv(filename)
-		print(File[['email','password','hashed','website']])
-	except:
-		print("[!] -_- there are no passwords here babe, create a new file with the store password option.")
+# 		File = pd.read_csv(filename)
+# 		print(File[['email','password','hashed','website']])
+# 	except:
+# 		print("[!] -_- there are no passwords here babe, create a new file with the store password option.")
 
 def main():
 	while True:
