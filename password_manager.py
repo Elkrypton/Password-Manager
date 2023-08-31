@@ -59,6 +59,10 @@ class PasswordManager():
 # 	except:
 # 		print("[!] -_- there are no passwords here babe, create a new file with the store password option.")
 
+	def ShowLoginInfo(self):
+		
+
+
 def main():
 	while True:
 

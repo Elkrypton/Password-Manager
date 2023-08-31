@@ -11,6 +11,8 @@ Base = declarative_base()
 db_url = "sqlite:///./logininfo.db"
 
 
+engine = db.create_engine(db_url)
+
 class LoginInfo(Base):
     __tablename__ = "logininfo"
 
@@ -18,6 +20,14 @@ class LoginInfo(Base):
     website = Column(String, unique=True)
     email = Column(String)
     hashed = Column(String)
+
+
+def load_engine():
+    
+    engine = db.create_engine(db_url)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    return session
 
 class ProcessInformation():
 
@@ -27,15 +37,12 @@ class ProcessInformation():
         self.hashed = hashed
     
 
-
     def CreateEngine(self):
         engine = db.create_engine(db_url, echo=True)
         return engine
 
-    def add_data(website, email, hashed):
-        engine = self.CreateEngine()
-        Session = sessionmaker(bind=engine)
-        session = Session()
+    def add_data(self,website, email, hashed):
+        session = load_engine()
         try:
             info_data = LoginInfo(website, email, hashed)
             session.add(info_data)
@@ -43,6 +50,18 @@ class ProcessInformation():
     
         except Exception as err:
             print("[!] Error Happened = {}".format(str(err)))
+    
+def AccessData():
+    session = load_engine()
+    try:
+        info = session.query(LoginInfo).all()
+        for login in info:
+            print(login.website, login.email, login.hashed)
+        
+    except Exception as err:
+        print("[!] Error happened: {}".format(str(err)))
 
 
 
+    
+AccessData()
