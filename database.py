@@ -31,9 +31,9 @@ def load_engine():
 
 class ProcessInformation():
 
-    def __init__(self, website, email, hashed):
+    def __init__(self,website, email, hashed):
         self.website = website
-        self.email = email
+        self.email = email 
         self.hashed = hashed
     
 
@@ -41,10 +41,10 @@ class ProcessInformation():
         engine = db.create_engine(db_url, echo=True)
         return engine
 
-    def add_data(self,website, email, hashed):
+    def add_data(self):
         session = load_engine()
         try:
-            info_data = LoginInfo(website, email, hashed)
+            info_data = LoginInfo(self.website, self.email, self.hashed)
             session.add(info_data)
             session.commit()
     
@@ -55,13 +55,11 @@ def AccessData():
     session = load_engine()
     try:
         info = session.query(LoginInfo).all()
-        for login in info:
-            print(login.website, login.email, login.hashed)
-        
+        return info
+
     except Exception as err:
         print("[!] Error happened: {}".format(str(err)))
 
 
 
     
-AccessData()

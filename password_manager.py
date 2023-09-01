@@ -1,28 +1,28 @@
 
-from utils
-import csv
-import pandas as pd 
-from database import ProcessInformation
+
+# import pandas as pd 
+from database import ProcessInformation, AccessData
+from utils import CryptTools
 
 ###we may have to adjust the program dto actually retrieve the data based on the provided key
 
 
 class PasswordManager():
 
-	def __init__(self,email,password, website):
+	def __init__(self,website,email,password):
+		self.website = website
 		self.email = email
 		self.password = password
-		self.website = website
 
 
 	#save data to a local db file
 	def SavePassword(self):
-		login_info = ProcessInformation()
+		login_info = ProcessInformation(self.website, self.email, self.password)
 		try:
 			login_info.add_data()
 		
 		except Exception as err:
-			print("[!] Error encountered ! : {}".format(str(err)))
+			print("FUNC: SAVEPASSWORD \n[!] Error encountered ! : {}".format(str(err)))
 	
 
 	# def save_to_file(self):
@@ -59,44 +59,71 @@ class PasswordManager():
 # 	except:
 # 		print("[!] -_- there are no passwords here babe, create a new file with the store password option.")
 
-	def ShowLoginInfo(self):
+def ShowLoginInfo():
+	info = AccessData()
+	for login in info:
+		print(login.website, login.email, login.hashed)
 		
 
-
 def main():
-	while True:
+
+	print("""
+		1 - Save password
+		2 - View password
+	""")
+
+	choice = int(input(">>:"))
+	if choice == 1:
+		website = input(">> Website:")
+		email = input(">> Email:")
+		password = input(">> Password:")
+		crypt = CryptTools(password)
+		login = PasswordManager(website, email, crypt.Encrypt())
+		try:
+			login.SavePassword()
+
+		except Exception as err:
+			print(">> Some shit went wrong!")
+		
+	elif choice == 2:
+		ShowLoginInfo()
 
 
-		print("""
 
-.------..------..------..------..------..------.
-|C.--. ||H.--. ||E.--. ||E.--. ||K.--. ||S.--. |
-| :/\: || :/\: || (\/) || (\/) || :/\: || :/\: |
-| :\/: || (__) || :\/: || :\/: || :\/: || :\/: |
-| '--'C|| '--'H|| '--'E|| '--'E|| '--'K|| '--'S|
-`------'`------'`------'`------'`------'`------'
+# 	while True:
 
 
-				1 - Store password
-				2 - View Password
+# 		print("""
+
+# .------..------..------..------..------..------.
+# |C.--. ||H.--. ||E.--. ||E.--. ||K.--. ||S.--. |
+# | :/\: || :/\: || (\/) || (\/) || :/\: || :/\: |
+# | :\/: || (__) || :\/: || :\/: || :\/: || :\/: |
+# | '--'C|| '--'H|| '--'E|| '--'E|| '--'K|| '--'S|
+# `------'`------'`------'`------'`------'`------'
 
 
-		""")
-
-		choice = int(input("\n>>"))
-		if choice == 1:
-			email = input("[+] Email : ")
-			password = input("[+] Password:")
-			website  = input("[+] Website:")
-			login = PasswordManager(email,password,website)
-			login.generate_key()
-			login.save_to_file()
-
-		elif choice == 2:
-			pandas_view()
-
-		else:
-			pass
+# 				1 - Store password
+# 				2 - View Password
 
 
+# 		""")
+
+# 		choice = int(input("\n>>"))
+# 		if choice == 1:
+# 			email = input("[+] Email : ")
+# 			password = input("[+] Password:")
+# 			website  = input("[+] Website:")
+# 			login = PasswordManager(email,password,website)
+# 			login.generate_key()
+# 			login.save_to_file()
+
+# 		elif choice == 2:
+# 			pandas_view()
+
+# 		else:
+# 			pass
+
+
+# main()
 main()
