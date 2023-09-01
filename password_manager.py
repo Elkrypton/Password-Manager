@@ -3,7 +3,8 @@
 # import pandas as pd 
 from database import ProcessInformation, AccessData
 from utils import CryptTools
-
+import traceback
+from collections import OrderedDict
 ###we may have to adjust the program dto actually retrieve the data based on the provided key
 
 
@@ -20,8 +21,10 @@ class PasswordManager():
 		login_info = ProcessInformation(self.website, self.email, self.password)
 		try:
 			login_info.add_data()
+
 		
 		except Exception as err:
+			traceback.print_exc()
 			print("FUNC: SAVEPASSWORD \n[!] Error encountered ! : {}".format(str(err)))
 	
 
@@ -59,11 +62,22 @@ class PasswordManager():
 # 	except:
 # 		print("[!] -_- there are no passwords here babe, create a new file with the store password option.")
 
+def pretty_print_table(data):
+    col_widths = [max(len(str(value)) for value in column) for column in zip(*data)]
+    
+    for row in data:
+        print(" | ".join(f"{str(value):<{width}}" for value, width in zip(row, col_widths)))
+    
+    separator = "+".join("-" * (width + 2) for width in col_widths)
+    print(separator)
+
 def ShowLoginInfo():
 	info = AccessData()
-	for login in info:
-		print(login.website, login.email, login.hashed)
-		
+	table_data = [(str(login.id), login.website, login.email, login.hashed) for login in info]
+	pretty_print_table([("ID","Website","Email","Hashed")] + table_data)
+
+
+
 
 def main():
 
@@ -72,13 +86,15 @@ def main():
 		2 - View password
 	""")
 
+
 	choice = int(input(">>:"))
 	if choice == 1:
 		website = input(">> Website:")
 		email = input(">> Email:")
 		password = input(">> Password:")
 		crypt = CryptTools(password)
-		login = PasswordManager(website, email, crypt.Encrypt())
+		hashed = crypt.Encrypt()
+		login = PasswordManager(website, email, str(hashed))
 		try:
 			login.SavePassword()
 

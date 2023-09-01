@@ -6,6 +6,7 @@ from sqlalchemy.orm import  relationship, DeclarativeBase, sessionmaker
 import os 
 from cryptography.fernet import Fernet 
 import sqlalchemy as db
+import traceback
 
 Base = declarative_base()
 db_url = "sqlite:///./logininfo.db"
@@ -23,7 +24,6 @@ class LoginInfo(Base):
 
 
 def load_engine():
-    
     engine = db.create_engine(db_url)
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -35,7 +35,6 @@ class ProcessInformation():
         self.website = website
         self.email = email 
         self.hashed = hashed
-    
 
     def CreateEngine(self):
         engine = db.create_engine(db_url, echo=True)
@@ -44,12 +43,13 @@ class ProcessInformation():
     def add_data(self):
         session = load_engine()
         try:
-            info_data = LoginInfo(self.website, self.email, self.hashed)
+            info_data = LoginInfo(website=self.website, email=self.email, hashed=self.hashed)
             session.add(info_data)
             session.commit()
     
         except Exception as err:
-            print("[!] Error Happened = {}".format(str(err)))
+            traceback.print_exc()
+            print("--FUNC ADD DATA \n [!] Error Happened = {}".format(str(err)))
     
 def AccessData():
     session = load_engine()
