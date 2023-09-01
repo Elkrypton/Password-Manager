@@ -73,7 +73,7 @@ def pretty_print_table(data):
 
 def ShowLoginInfo():
 	info = AccessData()
-    table_data = [(str(login.id), ilogin.website, login.email, login.hashed[:20]) for login in info]
+	table_data = [(str(login.id), login.website, login.email, login.hashed[:20]) for login in info]
 	pretty_print_table([("ID","Website","Email","Hashed")] + table_data)
 
 
