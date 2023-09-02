@@ -5,7 +5,7 @@ from cryptography.fernet import Fernet
 class CryptTools():
 
         def __init__(self, text):
-                self.text = bytes(text, encoding='utf-8')
+                self.text = str(text)
                 self.key = self.FindKey()
 
         def FindKey(self):
@@ -36,24 +36,10 @@ class CryptTools():
 
 
         def Encrypt(self):
-                return Fernet(self.key).encrypt(self.text)
+                encoded_text = bytes(self.text, encoding='utf-8')
+                return Fernet(self.key).encrypt(encoded_text)
         
         def Decrypt(self):
             
                 return Fernet(self.key).decrypt(self.text)
-
-if __name__ == "__main__":
-    print("""1 - Encryption
-            2 - Decryption"""
-            )
-    
-    answer = int(input(">>:"))
-    if answer == 1:
-        text = input("[+] Content:")
-        encrypt = CryptTools(text)
-        print(encrypt.Encrypt())
-    elif answer == 2:
-        token = input(">> Provide token:")
-        decrypt = CryptTools(token)
-        print(decrypt.Decrypt())
 

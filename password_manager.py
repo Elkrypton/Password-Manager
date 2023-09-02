@@ -79,8 +79,20 @@ def ShowLoginInfo():
 
 def GetSpecificInfo(query):
 	data = GetData(query)
-	table_data = [(str(info.id), info.website, info.email, info.hashed[:20]) for info in data]
+	hashed = [info.hashed for info in data]
+	for _h in hashed:
+		crypt_obj = CryptTools(_h)
+		try:
+	
+			password = crypt_obj.Decrypt()
+		except Exception as err:
+			print("[!] L9lawi : {}".format(str(err)))
+			continue
+		
+	table_data = [(str(info.id), info.website, info.email, password) for info in data]
+	print(table_data)
 	pretty_print_table([("ID", "WEBSITE","EMAIL","HASHED")] + table_data)
+
 
 def main():
 
