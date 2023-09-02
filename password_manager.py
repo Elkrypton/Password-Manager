@@ -1,7 +1,7 @@
 
 
 # import pandas as pd 
-from database import ProcessInformation, AccessData
+from database import ProcessInformation, AccessData, GetData
 from utils import CryptTools
 import traceback
 from collections import OrderedDict
@@ -77,11 +77,17 @@ def ShowLoginInfo():
 	pretty_print_table([("ID","Website","Email","Hashed")] + table_data)
 
 
+def GetSpecificInfo(query):
+	data = GetData(query)
+	table_data = [(str(info.id), info.website, info.email, info.hashed[:20]) for info in data]
+	pretty_print_table([("ID", "WEBSITE","EMAIL","HASHED")] + table_data)
+
 def main():
 
 	print("""
 		1 - Save password
 		2 - View password
+		3 - Search By Website
 	""")
 
 
@@ -101,6 +107,11 @@ def main():
 		
 	elif choice == 2:
 		ShowLoginInfo()
+
+	elif choice == 3:
+		query = input(">> Website:")
+		GetSpecificInfo(query)
+
 
 
 

@@ -50,6 +50,20 @@ class ProcessInformation():
         except Exception as err:
             traceback.print_exc()
             print("--FUNC ADD DATA \n [!] Error Happened = {}".format(str(err)))
+		
+
+def GetData(query_search):
+	session_ = load_engine()
+	try:
+	    data = session_.query(LoginInfo).filter(LoginInfo.website == query_search)
+	except Exception as err:
+	    traceback.print_exc()
+	    print("[!] Error occured : {}".format(str(err)))
+	return data
+
+
+
+	
     
 def AccessData():
     session = load_engine()
