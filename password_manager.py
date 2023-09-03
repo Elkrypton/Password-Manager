@@ -1,15 +1,13 @@
 
-
-
-# import pandas as pd 
+#importing the modules we need to make the project.
 from database import ProcessInformation, AccessData, GetData
 from utils import CryptTools
 import traceback
 from collections import OrderedDict
-###we may have to adjust the program dto actually retrieve the data based on the provided key
 
 
 
+#the class is responsible for managing the input and output of the user process
 class PasswordManager():
 
 	def __init__(self,website,email,password):
@@ -29,41 +27,7 @@ class PasswordManager():
 			traceback.print_exc()
 			print("FUNC: SAVEPASSWORD \n[!] Error encountered ! : {}".format(str(err)))
 	
-
-	# def save_to_file(self):
-	# 	headers = ['email','password',','website']
-	# 	hashed = Encrypt(self.password.encode(),self.key)
-	# 	rows = [self.email,self.password,hashed,self.website]
-	# 	filename = 'localfiles/Passwords.csv'
-	# 	with open(filename,'a',newline="") as f:
-	# 		writer = csv.writer(f)
-	# 		writer.writerow(headers)
-	# 		writer.writerow(rows)
-	# 		f.close()
-
-
-# def ShowPasswords():
-
-# 	filename ='localfiles/Passwords.csv'
-# 	rows = []
-# 	with open(filename,'r',newline="") as f:
-# 		reader = csv.reader(f,delimiter='|')
-# 		header = next(reader)
-# 		for row in reader:
-# 			rows.append(row)
-# 	print(header)
-# 	print(rows)
-
-
-# def pandas_view():
-# 	filename = 'localfiles/Passwords.csv'
-# 	try:
-
-# 		File = pd.read_csv(filename)
-# 		print(File[['email','password','hashed','website']])
-# 	except:
-# 		print("[!] -_- there are no passwords here babe, create a new file with the store password option.")
-
+#This function creates a table to displat the data on the console neatly
 def pretty_print_table(data):
     col_widths = [max(len(str(value)) for value in column) for column in zip(*data)]
     
@@ -92,7 +56,17 @@ def GetSpecificInfo(query):
 
 def main(): 
 
+
 	print("""
+
+
+# .------..------..------..------..------..------.
+# |C.--. ||H.--. ||E.--. ||E.--. ||K.--. ||S.--. |
+# | :/\: || :/\: || (\/) || (\/) || :/\: || :/\: |
+# | :\/: || (__) || :\/: || :\/: || :\/: || :\/: |
+# | '--'C|| '--'H|| '--'E|| '--'E|| '--'K|| '--'S|
+# `------'`------'`------'`------'`------'`------'
+
 		1 - Save password
 		2 - View password
 		3 - Search By Website
@@ -127,7 +101,7 @@ def main():
 # 	while True:
 
 
-# 		print("""
+ 		print("""
 
 # .------..------..------..------..------..------.
 # |C.--. ||H.--. ||E.--. ||E.--. ||K.--. ||S.--. |
