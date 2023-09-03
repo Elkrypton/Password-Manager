@@ -34,7 +34,7 @@ class ProcessInformation():
     def __init__(self,website, email, hashed):
         self.website = website
         self.email = email 
-        self.hashed = hashed
+        self.hashed = hashed.decode('utf-8')
 
     def CreateEngine(self):
         engine = db.create_engine(db_url, echo=True)
@@ -42,6 +42,7 @@ class ProcessInformation():
 
     def add_data(self):
         session = load_engine()
+
         try:
             info_data = LoginInfo(website=self.website, email=self.email, hashed=self.hashed)
             session.add(info_data)

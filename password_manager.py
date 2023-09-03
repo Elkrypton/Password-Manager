@@ -1,11 +1,13 @@
 
 
+
 # import pandas as pd 
 from database import ProcessInformation, AccessData, GetData
 from utils import CryptTools
 import traceback
 from collections import OrderedDict
 ###we may have to adjust the program dto actually retrieve the data based on the provided key
+
 
 
 class PasswordManager():
@@ -79,22 +81,16 @@ def ShowLoginInfo():
 
 def GetSpecificInfo(query):
 	data = GetData(query)
-	hashed = [info.hashed for info in data]
-	for _h in hashed:
-		crypt_obj = CryptTools(_h)
-		try:
-	
-			password = crypt_obj.Decrypt()
-		except Exception as err:
-			print("[!] L9lawi : {}".format(str(err)))
-			continue
+	for info in data:
+		hashed = info.hashed.decode()
+		password = CryptTools(hashed).Decrypt()
 		
 	table_data = [(str(info.id), info.website, info.email, password) for info in data]
 	print(table_data)
 	pretty_print_table([("ID", "WEBSITE","EMAIL","HASHED")] + table_data)
 
 
-def main():
+def main(): 
 
 	print("""
 		1 - Save password
@@ -110,12 +106,13 @@ def main():
 		password = input(">> Password:")
 		crypt = CryptTools(password)
 		hashed = crypt.Encrypt()
-		login = PasswordManager(website, email, str(hashed))
+		login = PasswordManager(website, email, hashed)
 		try:
 			login.SavePassword()
 
 		except Exception as err:
-			print(">> Some shit went wrong!")
+			print(">> Some shit went wrong! : {}".format(str(err)))
+			traceback.print_exc()
 		
 	elif choice == 2:
 		ShowLoginInfo()
@@ -164,3 +161,4 @@ def main():
 
 # main()
 main()
+
