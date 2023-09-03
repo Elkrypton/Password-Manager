@@ -97,42 +97,5 @@ def main():
 
 
 
-
-# 	while True:
-
-
- 		print("""
-
-# .------..------..------..------..------..------.
-# |C.--. ||H.--. ||E.--. ||E.--. ||K.--. ||S.--. |
-# | :/\: || :/\: || (\/) || (\/) || :/\: || :/\: |
-# | :\/: || (__) || :\/: || :\/: || :\/: || :\/: |
-# | '--'C|| '--'H|| '--'E|| '--'E|| '--'K|| '--'S|
-# `------'`------'`------'`------'`------'`------'
-
-
-# 				1 - Store password
-# 				2 - View Password
-
-
-# 		""")
-
-# 		choice = int(input("\n>>"))
-# 		if choice == 1:
-# 			email = input("[+] Email : ")
-# 			password = input("[+] Password:")
-# 			website  = input("[+] Website:")
-# 			login = PasswordManager(email,password,website)
-# 			login.generate_key()
-# 			login.save_to_file()
-
-# 		elif choice == 2:
-# 			pandas_view()
-
-# 		else:
-# 			pass
-
-
-# main()
 main()
 
