@@ -34,7 +34,7 @@ class ProcessInformation():
     def __init__(self,website, email, hashed):
         self.website = website
         self.email = email 
-        self.hashed = hashed.decode('utf-8')
+        self.hashed = hashed.decode()
 
     def CreateEngine(self):
         engine = db.create_engine(db_url, echo=True)

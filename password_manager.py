@@ -46,11 +46,16 @@ def ShowLoginInfo():
 def GetSpecificInfo(query):
 	data = GetData(query)
 	for info in data:
-		hashed = info.hashed.decode()
-		password = CryptTools(hashed).Decrypt()
+		if type(info.hashed) == str:
+			hashed = info.hashed
+			password = CryptTools(hashed).Decrypt()
+
+			
+		else:
+			hashed = info.hashed.decode()
+			password = CryptTools(hashed).Decrypt()
 		
 	table_data = [(str(info.id), info.website, info.email, password) for info in data]
-	print(table_data)
 	pretty_print_table([("ID", "WEBSITE","EMAIL","HASHED")] + table_data)
 
 
