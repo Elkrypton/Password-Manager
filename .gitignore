@@ -1,0 +1,9 @@
+__pycache__/
+*.so
+*.egg
+*.pyc
+pip-log.txt
+*.log
+
+#.database.py.swp
+
