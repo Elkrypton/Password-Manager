@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 pip-log.txt
 *.log
-
-#.database.py.swp
+*.pyo
+.pyw
+.database.py.swp
 
