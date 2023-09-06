@@ -1,18 +1,15 @@
 
 from sqlalchemy import Column, String, Integer, update
 from sqlalchemy import *
+from sqlalchemy import inspect
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import  relationship, DeclarativeBase, sessionmaker
-import os 
 from cryptography.fernet import Fernet 
 import sqlalchemy as db
-import traceback
 
 Base = declarative_base()
 db_url = "sqlite:///./logininfo.db"
 
-
-engine = db.create_engine(db_url)
 
 class LoginInfo(Base):
     __tablename__ = "logininfo"
@@ -28,6 +25,7 @@ def load_engine():
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
+
 
 class ProcessInformation():
 
@@ -51,7 +49,6 @@ def UpdateData(website, new_password):
         print("----UPDATED SUCCESS----")
     except Exception as err:
         print("[!] UPDATE FUNC FAILED: {}".format(err))
-        traceback.print_exc()
 
     def add_data(self):
         session = load_engine()
@@ -62,7 +59,6 @@ def UpdateData(website, new_password):
             session.commit()
     
         except Exception as err:
-            traceback.print_exc()
             print("--FUNC ADD DATA \n [!] Error Happened = {}".format(str(err)))
 		
 
@@ -71,8 +67,7 @@ def GetData(query_search):
 	try:
 	    data = session_.query(LoginInfo).filter(LoginInfo.website == query_search)
 	except Exception as err:
-	    traceback.print_exc()
-	    print("[!] Error occured : {}".format(str(err)))
+        print("[!] Error occured : {}".format(str(err)))
 	return data
 
 
