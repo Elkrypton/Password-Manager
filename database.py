@@ -8,7 +8,7 @@ from cryptography.fernet import Fernet
 import sqlalchemy as db
 
 Base = declarative_base()
-db_url = "sqlite:///./logininfo.db"
+db_url = "sqlite:///localfiles/logininfo.db"
 
 
 class LoginInfo(Base):
@@ -38,6 +38,19 @@ class ProcessInformation():
         engine = db.create_engine(db_url, echo=True)
         return engine
     
+    def add_data(self):
+
+        session = load_engine()
+
+        try:
+            info_data = LoginInfo(website=self.website, email=self.email, hashed=self.hashed)
+            session.add(info_data)
+            session.commit()
+    
+        except Exception as err:
+            print("--FUNC ADD DATA \n [!] Error Happened = {}".format(str(err)))
+		
+    
 def UpdateData(website, new_password):
     session = load_engine()
     update_object = update(LoginInfo)
@@ -50,25 +63,15 @@ def UpdateData(website, new_password):
     except Exception as err:
         print("[!] UPDATE FUNC FAILED: {}".format(err))
 
-    def add_data(self):
-        session = load_engine()
 
-        try:
-            info_data = LoginInfo(website=self.website, email=self.email, hashed=self.hashed)
-            session.add(info_data)
-            session.commit()
-    
-        except Exception as err:
-            print("--FUNC ADD DATA \n [!] Error Happened = {}".format(str(err)))
-		
 
 def GetData(query_search):
-	session_ = load_engine()
-	try:
-	    data = session_.query(LoginInfo).filter(LoginInfo.website == query_search)
-	except Exception as err:
+    session_ = load_engine()
+    try:
+            data = session_.query(LoginInfo).filter(LoginInfo.website == query_search)
+    except Exception as err:
         print("[!] Error occured : {}".format(str(err)))
-	return data
+    return data
 
 
     
