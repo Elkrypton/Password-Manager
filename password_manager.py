@@ -1,6 +1,6 @@
 
 #importing the modules we need to make the project.
-from database import ProcessInformation, AccessData, GetData, UpdateData
+from database import ProcessInformation, AccessData, GetData, UpdateData, DeleteAll
 from utils import CryptTools
 import traceback
 from collections import OrderedDict
@@ -76,6 +76,7 @@ def main():
 		2 - View password
 		3 - Search By Website
 		4 - Update Login Info
+		5 - Delete All
 	""")
 
 
@@ -91,7 +92,7 @@ def main():
 			login.SavePassword()
 
 		except Exception as err:
-			print(">> Some shit went wrong! : {}".format(str(err)))
+			print(">> Something went wrong! : {}".format(str(err)))
 			traceback.print_exc()
 		
 	elif choice == 2:
@@ -106,7 +107,13 @@ def main():
 		password = input(">>New Password:")
 		new_password = CryptTools(password).Encrypt()
 		UpdateData(website, new_password)
-
+	
+	elif choice == 5:
+		confirmation = input("[!] YOU ARE ABOUT THE WIPE OUT THE WHOLE DATABASE, ARE YOU SURE ?:\n")
+		if confirmation.lower() == 'yes':
+			DeleteAll()
+		else:
+			break
 
 
 

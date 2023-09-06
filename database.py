@@ -27,6 +27,7 @@ def load_engine():
     return session
 
 
+
 class ProcessInformation():
 
     def __init__(self,website, email, hashed):
@@ -74,7 +75,21 @@ def GetData(query_search):
     return data
 
 
-    
+def DeleteAll():
+    session = load_engine()
+    try:
+        confirm = input(">> ARE YOU REALLY SURE:?")
+        if confirm.lower() == "yes":
+            delete_all = session.query(LoginInfo).delete_all()
+            session.execute(delete_all)
+            session.commit()
+            print("----ALL LOGIN INFOS ARE DELETED----")
+        else:
+            break
+    except Exception as err:
+        print("[!] DELETE FUNC FAILED \n\t--- Something went Wrong : \n\t--{}")
+        
+
 def AccessData():
     session = load_engine()
     try:
