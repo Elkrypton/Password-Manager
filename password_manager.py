@@ -1,6 +1,6 @@
 
 #importing the modules we need to make the project.
-from database import ProcessInformation, AccessData, GetData
+from database import ProcessInformation, AccessData, GetData, UpdateData
 from utils import CryptTools
 import traceback
 from collections import OrderedDict
@@ -75,6 +75,7 @@ def main():
 		1 - Save password
 		2 - View password
 		3 - Search By Website
+		4 - Update Login Info
 	""")
 
 
@@ -99,6 +100,13 @@ def main():
 	elif choice == 3:
 		query = input(">> Website:")
 		GetSpecificInfo(query)
+	
+	elif choice == 4:
+		website= input(">> Website:")
+		password = input(">>New Password:")
+		new_password = CryptTools(password).Encrypt()
+		UpdateData(website, new_password)
+
 
 
 

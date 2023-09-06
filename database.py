@@ -1,5 +1,5 @@
 
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, update
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import  relationship, DeclarativeBase, sessionmaker
@@ -39,6 +39,19 @@ class ProcessInformation():
     def CreateEngine(self):
         engine = db.create_engine(db_url, echo=True)
         return engine
+    
+def UpdateData(website, new_password):
+    session = load_engine()
+    update_object = update(LoginInfo)
+    try:
+        update_object = update_object.where(LoginInfo.website==website)
+        update_object = update_object.values(hashed=new_password)
+        session.execute(update_object)
+        session.commit()
+        print("----UPDATED SUCCESS----")
+    except Exception as err:
+        print("[!] UPDATE FUNC FAILED: {}".format(err))
+        traceback.print_exc()
 
     def add_data(self):
         session = load_engine()
@@ -63,8 +76,6 @@ def GetData(query_search):
 	return data
 
 
-
-	
     
 def AccessData():
     session = load_engine()
