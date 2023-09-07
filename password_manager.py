@@ -1,6 +1,6 @@
 
 #importing the modules we need to make the project.
-from database import ProcessInformation, AccessData, GetData, UpdateData, DeleteAll
+from database import ProcessInformation, AccessData, GetData, UpdateData, DeleteAll, DeleteOneEntry
 from utils import CryptTools
 import traceback
 from collections import OrderedDict
@@ -77,6 +77,7 @@ def main():
 		3 - Search By Website
 		4 - Update Login Info
 		5 - Delete All
+		6 - Delete One Entry
 	""")
 
 
@@ -108,12 +109,18 @@ def main():
 		new_password = CryptTools(password).Encrypt()
 		UpdateData(website, new_password)
 	
+
 	elif choice == 5:
 		confirmation = input("[!] YOU ARE ABOUT THE WIPE OUT THE WHOLE DATABASE, ARE YOU SURE ?:\n")
 		if confirmation.lower() == 'yes':
 			DeleteAll()
 		else:
-			break
+			print("....")
+	
+	elif choice == 6:
+		website = input(">> Please provide the website:")
+		DeleteOneEntry(website)
+
 
 
 

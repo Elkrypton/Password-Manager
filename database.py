@@ -80,15 +80,21 @@ def DeleteAll():
     try:
         confirm = input(">> ARE YOU REALLY SURE:?")
         if confirm.lower() == "yes":
-            delete_all = session.query(LoginInfo).delete_all()
-            session.execute(delete_all)
+            session.query(LoginInfo).delete()
             session.commit()
             print("----ALL LOGIN INFOS ARE DELETED----")
         else:
-            break
+            print("---That was close---")
     except Exception as err:
-        print("[!] DELETE FUNC FAILED \n\t--- Something went Wrong : \n\t--{}")
+        print("[!] DELETE FUNC FAILED \n\t--- Something went Wrong : \n\t--{}".format(str(err)))
         
+def DeleteOneEntry(website):
+    session = load_engine()
+    try:
+        session.query(LoginInfo).filter(LoginInfo.website==website).delete()
+        session.commit()
+    except Exception as err:
+        print("[!] DELETE FUNC FAILED \n\t ---> Something Went Wrong \n\t--> {}".format(err))
 
 def AccessData():
     session = load_engine()
