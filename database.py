@@ -1,11 +1,8 @@
 
-from sqlalchemy import Column, String, Integer, update
-from sqlalchemy import *
-from sqlalchemy import inspect
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import  relationship, DeclarativeBase, sessionmaker
-from cryptography.fernet import Fernet 
-import sqlalchemy as db
+try:
+    from db_modules import *
+except ImportError as err:
+    print("----IMPORT ERROR--->\n\t---> {}".format(str(err)))
 
 Base = declarative_base()
 db_url = "sqlite:///localfiles/logininfo.db"

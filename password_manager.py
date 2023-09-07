@@ -1,11 +1,6 @@
 
 #importing the modules we need to make the project.
-from database import ProcessInformation, AccessData, GetData, UpdateData, DeleteAll, DeleteOneEntry
-from utils import CryptTools
-import traceback
-from collections import OrderedDict
-
-
+from password_manager_modules import *
 
 #the class is responsible for managing the input and output of the user process
 class PasswordManager():
@@ -24,7 +19,6 @@ class PasswordManager():
 
 		
 		except Exception as err:
-			traceback.print_exc()
 			print("FUNC: SAVEPASSWORD \n[!] Error encountered ! : {}".format(str(err)))
 	
 #This function creates a table to displat the data on the console neatly
@@ -65,12 +59,11 @@ def main():
 	print("""
 
 
-# .------..------..------..------..------..------.
-# |C.--. ||H.--. ||E.--. ||E.--. ||K.--. ||S.--. |
-# | :/\: || :/\: || (\/) || (\/) || :/\: || :/\: |
-# | :\/: || (__) || :\/: || :\/: || :\/: || :\/: |
-# | '--'C|| '--'H|| '--'E|| '--'E|| '--'K|| '--'S|
-# `------'`------'`------'`------'`------'`------'
+
+╦╔═╦═╗╦ ╦╔═╗╔╦╗╔═╗╔╗╔ -- Local Password Manager with Encryption
+╠╩╗╠╦╝╚╦╝╠═╝ ║ ║ ║║║║
+╩ ╩╩╚═ ╩ ╩   ╩ ╚═╝╝╚╝
+
 
 		1 - Save password
 		2 - View password
@@ -94,7 +87,6 @@ def main():
 
 		except Exception as err:
 			print(">> Something went wrong! : {}".format(str(err)))
-			traceback.print_exc()
 		
 	elif choice == 2:
 		ShowLoginInfo()
