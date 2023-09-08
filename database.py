@@ -1,13 +1,15 @@
 
-try:
-    from db_modules import *
-except ImportError as err:
-    print("----IMPORT ERROR--->\n\t---> {}".format(str(err)))
+from sqlalchemy import Column, String, Integer, update
+from sqlalchemy import *
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import  relationship, DeclarativeBase, sessionmaker
+import sqlalchemy as db
 
 Base = declarative_base()
 db_url = "sqlite:///localfiles/logininfo.db"
 
 
+#database model connection
 class LoginInfo(Base):
     __tablename__ = "logininfo"
 
@@ -16,13 +18,12 @@ class LoginInfo(Base):
     email = Column(String)
     hashed = Column(String)
 
-
+#creating and engine and a session object
 def load_engine():
     engine = db.create_engine(db_url)
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
-
 
 
 class ProcessInformation():

@@ -1,5 +1,5 @@
-from utils_modules import *
-
+from cryptography.fernet import Fernet
+import os
 class CryptTools():
 
         def __init__(self, text):
@@ -21,7 +21,6 @@ class CryptTools():
                                         self.GenerateKey()
 
                 return key
-        
         
         def GenerateKey(self):
                 filename = "keys.txt"

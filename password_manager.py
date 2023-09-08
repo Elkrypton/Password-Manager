@@ -1,7 +1,7 @@
 
 #importing the modules we need to make the project.
-from password_manager_modules import *
-
+from database import ProcessInformation, AccessData, GetData, UpdateData, DeleteAll, DeleteOneEntry
+from utils import CryptTools
 #the class is responsible for managing the input and output of the user process
 class PasswordManager():
 
