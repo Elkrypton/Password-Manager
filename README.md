@@ -1,4 +1,3 @@
-I apologize for the oversight. Let me correct that for you:
 
 # Password Manager - Local Password Manager
 
