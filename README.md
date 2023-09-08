@@ -1,4 +1,3 @@
-
 # Password Manager - Local Password Manager
 
 Password Manager is a command-line based password manager designed to securely store your passwords locally on your machine. It utilizes the Fernet encryption module from the cryptography library to ensure the safety of your sensitive information.
