@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet
-import os
+import os, string, random
 class CryptTools():
 
         def __init__(self, text):
@@ -11,7 +11,6 @@ class CryptTools():
                 key = ""
                 for file_ in os.listdir():
                         if os.path.exists(_file):
-                                
                                 content = open(_file, 'r')
                                 key = content.read()
                         else:
@@ -40,3 +39,13 @@ class CryptTools():
             
                 return Fernet(self.key).decrypt(self.text)
 
+
+class PasswordGenerator():
+        
+        def __init__(self, length=12):
+                self.length=length
+        
+        def Generate(self):
+                chars = string.ascii_letters + string.digits + string.punctuation
+                password = ''.join(random.choice(chars) for _ in range(self.length))
+                return password

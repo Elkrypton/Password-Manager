@@ -1,7 +1,9 @@
 
 #importing the modules we need to make the project.
 from database import ProcessInformation, AccessData, GetData, UpdateData, DeleteAll, DeleteOneEntry
-from utils import CryptTools
+from utils import CryptTools, PasswordGenerator
+
+
 #the class is responsible for managing the input and output of the user process
 class PasswordManager():
 
@@ -53,6 +55,8 @@ def GetSpecificInfo(query):
 	pretty_print_table([("ID", "WEBSITE","EMAIL","HASHED")] + table_data)
 
 
+
+
 def main(): 
 
 
@@ -71,6 +75,7 @@ def main():
 		4 - Update Login Info
 		5 - Delete All
 		6 - Delete One Entry
+		7 - Generate Password
 	""")
 
 
@@ -114,7 +119,9 @@ def main():
 		DeleteOneEntry(website)
 
 
-
+	elif choice == 7:
+		password = PasswordGenerator(16).Generate()
+		print(password)
 
 main()
 
