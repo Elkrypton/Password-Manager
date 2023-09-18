@@ -25,13 +25,13 @@ def load_engine():
     session = Session()
     return session
 
-
+#Processing input 
 class ProcessInformation():
 
     def __init__(self,website, email, hashed):
         self.website = website
         self.email = email 
-        self.hashed = hashed.decode()
+        self.hashed = hashed
 
     def CreateEngine(self):
         engine = db.create_engine(db_url, echo=True)
@@ -59,8 +59,10 @@ def UpdateData(website, new_password):
         session.execute(update_object)
         session.commit()
         print("----UPDATED SUCCESS----")
+        return True
     except Exception as err:
         print("[!] UPDATE FUNC FAILED: {}".format(err))
+    
 
 
 
