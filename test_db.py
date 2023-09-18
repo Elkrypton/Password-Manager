@@ -7,7 +7,7 @@ class TestPasswordManager():
 
     def setup_method(self):
         self._session = load_engine()
-        self.valid_login = ProcessInformation(website="test",email="test@example.com",hashed="gAAAAABlB60gzBlgCmNUNLpLx7P4UxVSqCjJ6IXiJ6eT0wAaUOEgTyvRJaDbywvE-ElXFh04hPK6yRVebOyrVh19lcdyB7_Z2g==")
+        self.valid_login = ProcessInformation(website='test',email="test@example.com",hashed="gAAAAABlB60gzBlgCmNUNLpLx7P4UxVSqCjJ6IXiJ6eT0wAaUOEgTyvRJaDbywvE-ElXFh04hPK6yRVebOyrVh19lcdyB7_Z2g==")
         self.valid_login.add_data()
 
     
@@ -33,8 +33,7 @@ class TestPasswordManager():
     def test_update(self):
         status = UpdateData('test', 'gAAAAABlB60gzBlgCmNUNLpLx7P4UxVSqCjJ6IXiJ6eT0wAaUOEgTyvRJaDbywvE-ElXFh04hPK6yRVebOyrVh19lcdyB7_Z2g==')
         assert status == True
-    
 
     def test_delete(self):
-        status = DeleteOneEntry('test')
+        status = DeleteOneEntry(123)
         assert status == True
