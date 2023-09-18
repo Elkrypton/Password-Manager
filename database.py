@@ -93,8 +93,10 @@ def DeleteOneEntry(website):
     try:
         session.query(LoginInfo).filter(LoginInfo.website==website).delete()
         session.commit()
+        return True
     except Exception as err:
         print("[!] DELETE FUNC FAILED \n\t ---> Something Went Wrong \n\t--> {}".format(err))
+    
 
 def AccessData():
     session = load_engine()
