@@ -81,8 +81,8 @@ def main():
 
 	choice = int(input(">>:"))
 	if choice == 1:
-		website = input(">> Website:")
-		email = input(">> Email:")
+		website = str(input(">> Website:"))
+		email = str(input(">> Email:"))
 		password = input(">> Password:")
 		crypt = CryptTools(password)
 		hashed = crypt.Encrypt()
