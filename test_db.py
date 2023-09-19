@@ -3,7 +3,7 @@ from database import *
 from sqlalchemy.exc import IntegrityError
 import pytest
 
-class TestPasswordManager():
+class TestPasswordDatabase():
 
     def setup_method(self):
         self._session = load_engine()
