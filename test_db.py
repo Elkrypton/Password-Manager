@@ -2,6 +2,8 @@
 from database import *
 from sqlalchemy.exc import IntegrityError
 import pytest
+from password_manager import PasswordManager
+
 
 class TestPasswordDatabase():
 
@@ -37,3 +39,20 @@ class TestPasswordDatabase():
     def test_delete(self):
         status = DeleteOneEntry(123)
         assert status == True
+
+class TestPasswordManagerInterface():
+
+    def setup_method(self):
+        self.password_manager = PasswordManager("test","test","test")
+    
+
+    def test_valid_info(self):
+        assert self.password_manager.website == "test"
+        assert self.password_manager.email == "test"
+        assert self.password_manager.password == "test"
+    
+
+    def test_save_password(self):
+        assert self.password_manager.SavePassword() == True
+        
+    

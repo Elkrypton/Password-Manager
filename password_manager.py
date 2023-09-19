@@ -18,10 +18,12 @@ class PasswordManager():
 		login_info = ProcessInformation(self.website, self.email, self.password)
 		try:
 			login_info.add_data()
+			return True
 
 		
 		except Exception as err:
 			print("FUNC: SAVEPASSWORD \n[!] Error encountered ! : {}".format(str(err)))
+			return False
 	
 #This function creates a table to displat the data on the console neatly
 def pretty_print_table(data):
@@ -123,5 +125,7 @@ def main():
 		password = PasswordGenerator(16).Generate()
 		print(password)
 
-main()
 
+
+if __name__ == "__main__":
+	main()
