@@ -3,7 +3,7 @@ from database import *
 from sqlalchemy.exc import IntegrityError
 import pytest
 from password_manager import PasswordManager
-from utils import CryptTools
+from utils import CryptTools, PasswordGenerator
 
 
 class TestPasswordDatabase():
@@ -56,7 +56,6 @@ class TestPasswordManagerInterface():
     def test_save_password(self):
         assert self.password_manager.SavePassword() == True
     
-
     
 
 class TestCryptography():
@@ -74,3 +73,27 @@ class TestCryptography():
         assert self.encryption_obj != self.encryption_obj_2
     
 
+class TestPasswordGenerator():
+    def setup_method(self):
+        self._password_length = PasswordGenerator(60)
+        self._passwordGen = self._password_length.Generate()
+        self._passwordGen_1 = self._password_length.Generate()
+        self._passwordGen_2 = self._password_length.Generate()
+
+    
+    def test_password_length(self):
+        length = self._password_length
+        password = self._passwordGen
+        assert length.length == 60
+        assert len(password) == 60
+
+    def test_password_type(self):
+        password = self._passwordGen
+        assert type(password) == str
+    
+    def test_password_unique(self):
+        password_1 = self._passwordGen_1
+        password_2 = self._passwordGen_2
+        assert password_1 != password_2
+
+    
