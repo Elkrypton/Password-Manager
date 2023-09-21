@@ -1,5 +1,7 @@
 from cryptography.fernet import Fernet
 import os, string, random
+
+#This class Encrypts and decrypts texts based on the provided key
 class CryptTools():
 
         def __init__(self, text):
@@ -39,7 +41,7 @@ class CryptTools():
             
                 return Fernet(self.key).decrypt(self.text)
 
-
+#Generates strong and unique passwords
 class PasswordGenerator():
         
         def __init__(self, length=12):
@@ -47,5 +49,10 @@ class PasswordGenerator():
         
         def Generate(self):
                 chars = string.ascii_letters + string.digits + string.punctuation
-                password = ''.join(random.choice(chars) for _ in range(self.length))
+                try:
+
+                        password = ''.join(random.choice(chars) for _ in range(self.length))
+                
+                except Exception as ex:
+                        print("--ERROR : {}".format(ex))
                 return password

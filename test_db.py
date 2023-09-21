@@ -60,6 +60,8 @@ class TestPasswordManagerInterface():
 
 class TestCryptography():
     def setup_method(self):
+        self.crypt = CryptTools('test')
+        self.key = self.crypt.key
         self.encryption_obj = CryptTools('test').Encrypt()
         self.encryption_obj_2 = CryptTools('test').Encrypt()
         self.decryption_obj = CryptTools(self.encryption_obj.decode()).Decrypt()
@@ -72,6 +74,9 @@ class TestCryptography():
     def test_encryption_changes(self):
         assert self.encryption_obj != self.encryption_obj_2
     
+    def test_key_file(self):
+        key = self.key
+        assert key == "66LhH0EgI-YCGsKJ3u1InklrjPLTevnV6bQpsmsojkU="
 
 class TestPasswordGenerator():
     def setup_method(self):
@@ -95,5 +100,7 @@ class TestPasswordGenerator():
         password_1 = self._passwordGen_1
         password_2 = self._passwordGen_2
         assert password_1 != password_2
+    
+
 
     
