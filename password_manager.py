@@ -2,7 +2,7 @@
 #importing the modules we need to make the project.
 from database import ProcessInformation, AccessData, GetData, UpdateData, DeleteAll, DeleteOneEntry
 from utils import CryptTools, PasswordGenerator
-
+import sys
 
 #the class is responsible for managing the input and output of the user process
 class PasswordManager():
@@ -61,70 +61,82 @@ def GetSpecificInfo(query):
 
 def main(): 
 
-
-	print("""
-
-
-
-╦╔═╦═╗╦ ╦╔═╗╔╦╗╔═╗╔╗╔ -- Local Password Manager with Encryption
-╠╩╗╠╦╝╚╦╝╠═╝ ║ ║ ║║║║
-╩ ╩╩╚═ ╩ ╩   ╩ ╚═╝╝╚╝
+	state = True
+	while state:
+		print("""
 
 
-		1 - Save password
-		2 - View password
-		3 - Search By Website
-		4 - Update Login Info
-		5 - Delete All
-		6 - Delete One Entry
-		7 - Generate Password
-	""")
+
+	╦╔═╦═╗╦ ╦╔═╗╔╦╗╔═╗╔╗╔ -- Local Password Manager with Encryption
+	╠╩╗╠╦╝╚╦╝╠═╝ ║ ║ ║║║║
+	╩ ╩╩╚═ ╩ ╩   ╩ ╚═╝╝╚╝
 
 
-	choice = int(input(">>:"))
-	if choice == 1:
-		website = str(input(">> Website:"))
-		email = str(input(">> Email:"))
-		password = input(">> Password:")
-		crypt = CryptTools(password)
-		hashed = crypt.Encrypt()
-		login = PasswordManager(website, email, hashed)
+			1 - Save password
+			2 - View password
+			3 - Search By Website
+			4 - Update Login Info
+			5 - Delete All
+			6 - Delete One Entry
+			7 - Generate Password
+			8 - Exit
+		""")
+
 		try:
-			login.SavePassword()
-
-		except Exception as err:
-			print(">> Something went wrong! : {}".format(str(err)))
-		
-	elif choice == 2:
-		ShowLoginInfo()
-
-	elif choice == 3:
-		query = input(">> Website:")
-		GetSpecificInfo(query)
-	
-	elif choice == 4:
-		website= input(">> Website:")
-		password = input(">>New Password:")
-		new_password = CryptTools(password).Encrypt()
-		UpdateData(website, new_password)
-	
-
-	elif choice == 5:
-		confirmation = input("[!] YOU ARE ABOUT THE WIPE OUT THE WHOLE DATABASE, ARE YOU SURE ?:\n")
-		if confirmation.lower() == 'yes':
-			DeleteAll()
-		else:
-			print("....")
-	
-	elif choice == 6:
-		website = input(">> Please provide the website:")
-		DeleteOneEntry(website)
 
 
-	elif choice == 7:
-		password = PasswordGenerator(16).Generate()
-		print(password)
+			choice = int(input(">>:"))
+			if choice == 1:
+				website = str(input(">> Website:"))
+				email = str(input(">> Email:"))
+				password = input(">> Password:")
+				crypt = CryptTools(password)
+				hashed = crypt.Encrypt()
+				login = PasswordManager(website.lower(), email, hashed)
+				try:
+					login.SavePassword()
 
+				except Exception as err:
+					print(">> Something went wrong! : {}".format(str(err)))
+				
+			elif choice == 2:
+				ShowLoginInfo()
+
+			elif choice == 3:
+				query = input(">> Website:")
+				GetSpecificInfo(query.lower())
+			
+			elif choice == 4:
+				website= input(">> Website:")
+				password = input(">>New Password:")
+				new_password = CryptTools(password).Encrypt()
+				UpdateData(website, new_password)
+			
+
+			elif choice == 5:
+				confirmation = input("[!] YOU ARE ABOUT THE WIPE OUT THE WHOLE DATABASE, ARE YOU SURE ?:\n")
+				if confirmation.lower() == 'yes':
+					DeleteAll()
+				else:
+					print("....")
+			
+			elif choice == 6:
+				website = input(">> Please provide the website:")
+				DeleteOneEntry(website)
+
+
+			elif choice == 7:
+				password = PasswordGenerator(16).Generate()
+				print(">> Your Generated Password:\n")
+				print(password)
+			
+			elif choice == 8:
+				sys.exit("Take care...")
+			
+			else:
+				sys.exit("[!] Unrecognized choice.. exiting...")
+		except Exception as e:
+			print("Something went wrong: {}".format(e))
 
 
 if __name__ == "__main__":
